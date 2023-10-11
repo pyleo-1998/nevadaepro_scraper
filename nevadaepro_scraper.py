@@ -5,7 +5,7 @@ import requests
 from bs4 import BeautifulSoup
 from typing import Optional,Mapping 
 from urllib.parse import quote_plus
-from headers import download_files_headers,pagination_headers
+from headers import download_files_headers,pagination_headers,starting_page_header
 
 
 
@@ -130,7 +130,7 @@ class Nevadaepro_Scraper:
             _from+=25
     
     def start(self):
-        starting_page_response = self.session.get('https://nevadaepro.com/bso/view/search/external/advancedSearchBid.xhtml?openBids=true')
+        starting_page_response = self.session.get('https://nevadaepro.com/bso/view/search/external/advancedSearchBid.xhtml?openBids=true',headers=starting_page_header)
         soup = BeautifulSoup(starting_page_response.content, 'html.parser')
         self.extract_data_from_html_page(soup)
         self.extract_data_from_pagination(soup)
